@@ -7,7 +7,7 @@ steps:
     pull: if-not-exists
     settings:
       platform: linux/arm64
-      repo: xbclub/drone-tencent-ssl-createDeploy
+      repo: xbclub/drone-tencent-ssl-create-deploy
       environment:
         - DOCKER_BUILDKIT: 1
       tag:
@@ -37,8 +37,8 @@ steps:
         from_secret: DOCKER_SELF_USERNAME
       password:
         from_secret: DOCKER_SELF_PASSWORD
-      target: xbclub/drone-tencent-ssl-createDeploy:latest
-      template: xbclub/drone-tencent-ssl-createDeploy:latest-ARCH
+      target: xbclub/drone-tencent-ssl-create-deploy:latest
+      template: xbclub/drone-tencent-ssl-create-deploy:latest-ARCH
       platforms:
         - linux/amd64
         - linux/arm64
