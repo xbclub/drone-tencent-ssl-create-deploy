@@ -50,7 +50,7 @@ steps:
       secret_key:
         from_secret: tencent_secret_key
       resource_type: teo
-      deploy_domain: domain1.com,domain2.com
+      deploy_domain: "www.domain1.com,blog.domain1.com"
       public_key: /path/to/cert.pem
       private_key: /path/to/key.pem
 ```
