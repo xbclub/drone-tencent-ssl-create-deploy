@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"github.com/zeromicro/go-zero/core/logx"
 	"os"
 	"strings"
 
@@ -40,7 +41,7 @@ func (p *Plugin) Execute() error {
 		return err
 	}
 
-	fmt.Printf("Certificate updated successfully:\n   %s\n", response.ToJsonString())
+	logx.Infof("Certificate updated successfully: %s", response.ToJsonString())
 	if response.Response.CertificateId == nil || len(*response.Response.CertificateId) == 0 {
 		return fmt.Errorf("certificate ID NOT FOUND")
 	}
@@ -56,7 +57,7 @@ func (p *Plugin) Execute() error {
 		}
 		return err
 	}
-	fmt.Printf("Certificate Deploy successfully:\n    %s\n", deployResponse.ToJsonString())
+	logx.Infof("Certificate Deploy successfully: %s", deployResponse.ToJsonString())
 	return nil
 }
 
@@ -75,6 +76,13 @@ func readCertificateFile(filePath string) (string, error) {
 }
 
 func main() {
+	logconfig := logx.LogConf{
+		Level:    "info",
+		Mode:     "console",
+		Encoding: "plain",
+		Stat:     false,
+	}
+	logx.MustSetup(logconfig)
 	// 从环境变量获取证书文件路径
 	publicKeyPath := os.Getenv("PLUGIN_PUBLIC_KEY")
 	privateKeyPath := os.Getenv("PLUGIN_PRIVATE_KEY")
@@ -82,14 +90,14 @@ func main() {
 	// 读取公钥文件
 	publicKeyContent, err := readCertificateFile(publicKeyPath)
 	if err != nil {
-		fmt.Printf("Error reading public key: %s\n", err)
+		logx.Errorf("Error reading public key: %s", err)
 		os.Exit(1)
 	}
 
 	// 读取私钥文件
 	privateKeyContent, err := readCertificateFile(privateKeyPath)
 	if err != nil {
-		fmt.Printf("Error reading private key: %s\n", err)
+		logx.Errorf("Error reading private key: %s", err)
 		os.Exit(1)
 	}
 	instanceIdList := strings.Split(os.Getenv("PLUGIN_DEPLOY_DOMAIN"), ",")
@@ -103,7 +111,7 @@ func main() {
 		PrivateKey:     privateKeyContent,
 	}
 	if err := plugin.Execute(); err != nil {
-		fmt.Printf("Error: %s\n", err)
+		logx.Errorf("Error: %s", err)
 		os.Exit(1)
 	}
 }
