@@ -30,6 +30,8 @@ steps:
       password:
         from_secret: DOCKER_SELF_PASSWORD
       purge: false
+    depends_on:
+      - build-image
   - name: mergeimages
     image: plugins/manifest
     settings:

@@ -60,7 +60,7 @@ steps:
 ### 方式二：使用 Docker
 > 注意 不要使用 -- restart always 参数 否则将重复部署不会自动终止
 ```bash
-bash docker run --rm \
+bash docker run -it --rm \
 -e PLUGIN_SECRET_ID="your-secret-id" \
 -e PLUGIN_SECRET_KEY="your-secret-key" \
 -e PLUGIN_OLD_CERTIFICATE_ID="your-old-certificate-id" \
